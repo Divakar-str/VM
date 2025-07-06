@@ -3,49 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <title>Vehicle Data Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 4px rgba(13, 110, 253, 0.5);
+    }
+
+    .btn {
+      min-width: 100px;
+    }
+
+    table th,
+    table td {
+      vertical-align: middle !important;
+      font-size: 0.95rem;
+    }
+
+    .table thead th {
+      white-space: nowrap;
+    }
+
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-row .col-md-4 {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
 </head>
-<body class="p-4">
+<body class="py-5">
+
   <div class="container">
-    <h2 class="mb-4">Vehicle Data Manager</h2>
+    <!-- Form Card -->
+    <div class="card p-4 mb-5">
+      <h2 class="mb-4 text-primary">🚘 Vehicle Data Manager</h2>
 
-    <form id="vehicleForm" class="row g-3 mb-4">
-      <input type="hidden" id="editIndex">
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="Vehicle No" id="vehicleNo" required></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="TAX" id="tax"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="GTAX" id="gtax"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="Owner Name" id="ownerName"></div>
-      <div class="col-md-4"><input type="tel" class="form-control" placeholder="Mobile" id="mobile"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="FC" id="fc"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="AIP" id="aip"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="PE" id="pe"></div>
-      <div class="col-md-4"><input type="text" class="form-control" placeholder="CH No" id="chNo"></div>
-      <div class="col-md-12"><input type="text" class="form-control" placeholder="Remarks" id="remarks"></div>
-      <div class="col-md-12">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="reset" class="btn btn-secondary ms-2">Reset</button>
+      <form id="vehicleForm" class="row g-3">
+        <input type="hidden" id="editIndex">
+
+        <div class="col-md-4">
+          <label for="vehicleNo" class="form-label">Vehicle No</label>
+          <input type="text" class="form-control" id="vehicleNo" required>
+        </div>
+
+        <div class="col-md-4">
+          <label for="tax" class="form-label">TAX</label>
+          <input type="date" class="form-control" id="tax">
+        </div>
+
+        <div class="col-md-4">
+          <label for="gtax" class="form-label">GTAX</label>
+          <input type="date" class="form-control" id="gtax">
+        </div>
+
+        <div class="col-md-4">
+          <label for="ownerName" class="form-label">Owner Name</label>
+          <input type="text" class="form-control" id="ownerName">
+        </div>
+
+        <div class="col-md-4">
+          <label for="mobile" class="form-label">Mobile</label>
+          <input type="text" class="form-control" id="mobile">
+        </div>
+
+        <div class="col-md-4">
+          <label for="fc" class="form-label">FC</label>
+          <input type="date" class="form-control" id="fc">
+        </div>
+
+        <div class="col-md-4">
+          <label for="aip" class="form-label">AIP</label>
+          <input type="date" class="form-control" id="aip">
+        </div>
+
+        <div class="col-md-4">
+          <label for="pe" class="form-label">PE</label>
+          <input type="date" class="form-control" id="pe">
+        </div>
+
+        <div class="col-md-4">
+          <label for="chNo" class="form-label">CH No</label>
+          <input type="text" class="form-control" id="chNo">
+        </div>
+
+        <div class="col-md-12">
+          <label for="remarks" class="form-label">Remarks</label>
+          <input type="text" class="form-control" id="remarks">
+        </div>
+
+        <div class="col-md-12 text-end">
+          <button type="submit" class="btn btn-success me-2">💾 Save</button>
+          <button type="reset" class="btn btn-secondary">🔁 Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card p-3">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-primary text-center">
+            <tr>
+              <th>S.No</th>
+              <th>Vehicle No</th>
+              <th>TAX</th>
+              <th>GTAX</th>
+              <th>Owner</th>
+              <th>Mobile</th>
+              <th>FC</th>
+              <th>AIP</th>
+              <th>PE</th>
+              <th>CH No</th>
+              <th>Remarks</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="vehicleTableBody"></tbody>
+        </table>
       </div>
-    </form>
-
-    <table class="table table-bordered" id="vehicleTable">
-      <thead class="table-dark">
-        <tr>
-          <th>S.No</th>
-          <th>Vehicle No</th>
-          <th>TAX</th>
-          <th>GTAX</th>
-          <th>Owner</th>
-          <th>Mobile</th>
-          <th>FC</th>
-          <th>AIP</th>
-          <th>PE</th>
-          <th>CH No</th>
-          <th>Remarks</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    </div>
   </div>
 
   <script src="script.js"></script>
